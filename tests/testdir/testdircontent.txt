@@ -1,0 +1,1 @@
+Hello I am the testdir content to see if the recursive upload works.
