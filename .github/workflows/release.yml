@@ -21,7 +21,7 @@ jobs:
       - name: Set Version
         id: version
         run: |
-          echo "::set-output name=PKG_VERSION::$(pip show filedgr_lib_ipfs | grep Version | sed 's/Version://g' | sed 's/ //g')"
+          echo "::set-output name=PKG_VERSION::$(pip show filedgr_lib_ipfs | grep Version | sed 's/Version://g' | sed 's/-//g')"
       - name: Get Short Sha
         id: sha
         run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
