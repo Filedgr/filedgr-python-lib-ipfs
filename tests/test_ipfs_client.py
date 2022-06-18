@@ -1,4 +1,4 @@
-from unittest import TestCase, IsolatedAsyncioTestCase
+from unittest import IsolatedAsyncioTestCase
 
 from filedgr_lib_ipfs.ipfs_client import IpfsClient
 
@@ -16,7 +16,7 @@ class TestIpfsClient(IsolatedAsyncioTestCase):
         self.assertIn('Size', res)
 
     async def test_add_directory(self):
-        res = await self.client.add_directory("nftfc")
+        res = await self.client.add_directory("testdir")
         print(f"The result of the add file call: {res}")
         self.assertIn('Hash', res)
         self.assertIn('Name', res)
