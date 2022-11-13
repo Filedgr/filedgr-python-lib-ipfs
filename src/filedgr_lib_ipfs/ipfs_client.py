@@ -21,7 +21,7 @@ class IpfsClient:
     async def ls(self):
         async with aiohttp.ClientSession() as session:
             url = f"{self.__get_addr()}/api/v0/files/ls"
-            async with self.__aio_session.post(url=url) as response:
+            async with session.post(url=url) as response:
                 if response.status == 200:
                     return await response.json()
 

@@ -6,7 +6,7 @@ from filedgr_lib_ipfs.ipfs_client import IpfsClient
 class TestIpfsClient(IsolatedAsyncioTestCase):
 
     def setUp(self):
-        self.client = IpfsClient(host="localhost", port=5001)
+        self.client = IpfsClient(host="3.124.209.146", port=5001)
 
     async def test_add_file(self):
         res = await self.client.add_file("testfile.txt")
