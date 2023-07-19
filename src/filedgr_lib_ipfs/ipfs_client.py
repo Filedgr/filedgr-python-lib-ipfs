@@ -1,7 +1,5 @@
 import os
-
 import aiohttp
-
 from filedgr_lib_ipfs.my_io.my_file_io import build_dir_tree
 
 
@@ -27,7 +25,7 @@ class IpfsClient:
 
     async def add_file(self, path: str) -> str:
         if os.path.exists(path) and os.path.isfile(path):
-            url = f"{self.__get_addr()}/api/v0/add"
+            url = f"{self.__get_addr()}/api/v0/add?cid-version=1"
             files = {
                 path: open(path, 'rb')
             }
