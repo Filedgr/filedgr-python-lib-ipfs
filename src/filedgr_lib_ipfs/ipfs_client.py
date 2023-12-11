@@ -1,4 +1,5 @@
 import os
+from typing import Optional
 
 import aiohttp
 
@@ -38,7 +39,9 @@ class IpfsClient:
         else:
             raise FileNotFoundError(f"The file: {path} was not found.")
 
-    async def add_directory(self, path: str) -> str:
+    async def add_directory(self,
+                            path: str,
+                            remove_prefix: Optional[str] = None) -> str:
         dirs, files = build_dir_tree(path)
         params = {'pin': 'true'}
         async with aiohttp.ClientSession() as session:
@@ -46,12 +49,20 @@ class IpfsClient:
             with aiohttp.MultipartWriter('form-data') as mpwriter:
 
                 for dir in dirs:
+                    if remove_prefix:
+                        name = dir.removeprefix(remove_prefix)
+                    else:
+                        name = dir
                     folder_part = mpwriter.append(obj='', headers={'content-type': 'application/x-directory'})
-                    folder_part.set_content_disposition('form-data', name="file", filename=dir)
+                    folder_part.set_content_disposition('form-data', name="file", filename=name)
 
                 for file in files:
+                    if remove_prefix:
+                        name = file.removeprefix(remove_prefix)
+                    else:
+                        name = file
                     file_part = mpwriter.append(open(file, "rb"))
-                    file_part.set_content_disposition('form-data', name="file", filename=file)
+                    file_part.set_content_disposition('form-data', name="file", filename=name)
 
                 async with session.post(url=url, data=mpwriter, params=params) as resp:
                     if resp.status == 200:

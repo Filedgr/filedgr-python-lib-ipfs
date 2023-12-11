@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "filedgr-ipfs-libs"
-version = "0.0.2-beta.3"
+version = "0.0.2-beta.4"
 requires-python = ">=3.9"
 description = "Python libs to interact with the IPFS node"
 readme = "README.md"
