@@ -1,5 +1,7 @@
 import os
+
 import aiohttp
+
 from filedgr_lib_ipfs.my_io.my_file_io import build_dir_tree
 
 
@@ -40,7 +42,7 @@ class IpfsClient:
         dirs, files = build_dir_tree(path)
         params = {'pin': 'true'}
         async with aiohttp.ClientSession() as session:
-            url = f"{self.__get_addr()}/api/v0/add"
+            url = f"{self.__get_addr()}/api/v0/add?cid-version=1"
             with aiohttp.MultipartWriter('form-data') as mpwriter:
 
                 for dir in dirs:
@@ -53,6 +55,12 @@ class IpfsClient:
 
                 async with session.post(url=url, data=mpwriter, params=params) as resp:
                     if resp.status == 200:
-                        return await resp.text()
+                        import json
+                        res = await resp.text()
+                        res = res.replace("\n", "")
+                        res = res.replace("}{", "},{")
+                        res = f"[{res}]"
+                        res_dict = json.loads(res)
+                        return res_dict
                     else:
                         print(await resp.text())
