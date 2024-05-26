@@ -18,6 +18,7 @@ class TestIpfsClient(IsolatedAsyncioTestCase):
     async def test_add_directory(self):
         res = await self.client.add_directory(path="/Users/ericfalk/ws_filedgr/filedgr-python-lib-ipfs/tests/testdir",
                                               remove_prefix="/Users/ericfalk/ws_filedgr/filedgr-python-lib-ipfs/tests/")
+        result = [entry for entry in res if entry["Name"] == "testdir/testdircontent.txt"]
         print(f"The result of the add file call: {res}")
         self.assertIn('Hash', res)
         self.assertIn('Name', res)
