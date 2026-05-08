@@ -1,3 +1,14 @@
+import pytest
+
+# Skipped at module level: these are integration tests that require a local
+# IPFS daemon at 127.0.0.1:5001 and reference absolute paths from a former
+# author's workstation. They need rewriting against a containerized IPFS
+# fixture before they can run in CI.
+pytest.skip(
+    "stale: integration tests require local IPFS daemon",
+    allow_module_level=True,
+)
+
 from unittest import IsolatedAsyncioTestCase
 
 from filedgr_lib_ipfs.ipfs_client import IpfsClient
