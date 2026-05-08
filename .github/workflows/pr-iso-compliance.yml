@@ -10,6 +10,11 @@ on:
 permissions:
   contents: read
 
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.awsAccessKeyIdDev }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.awsSecretAccessKeyDev }}
+  AWS_DEFAULT_REGION: eu-central-1
+
 jobs:
   iso-compliance:
     name: iso-compliance
@@ -24,6 +29,14 @@ jobs:
         with:
           python-version: '3.12'
           cache: 'pip'
+
+      - name: Login pip to CodeArtifact
+        run: |
+          aws codeartifact login --tool pip \
+            --repository filedgr-pkg-awsutils \
+            --domain filedgr \
+            --domain-owner 867912683733 \
+            --region eu-central-1
 
       - name: Install dependencies
         run: |
