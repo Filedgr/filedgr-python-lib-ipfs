@@ -17,7 +17,7 @@ classifiers = [
 keywords = ["filedgr", "ipfs", "lib"]
 dependencies = [
     "aiohttp==3.13.5",
-    "aiodns==3.0.0"]
+    "aiodns==3.6.1"]
 
 [project.optional-dependencies]
 build = ["build", "twine"]
